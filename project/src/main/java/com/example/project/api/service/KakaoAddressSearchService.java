@@ -22,7 +22,7 @@ public class KakaoAddressSearchService {
     private final RestTemplate restTemplate;
     private final KakaoUrlBuilderService kakaoUrlBuilderService;
 
-    @Value("${kakao.rest.api.key}")
+    @Value("${KAKAO.REST.API.KEY}")
     private String kakaoRestApiKey;
 
     public kakaoApiResponseDto requestAddressSerch(String address) {
@@ -35,7 +35,7 @@ public class KakaoAddressSearchService {
         URI uri = kakaoUrlBuilderService.buildUriByAddressSearch(address);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.AUTHORIZATION, "KakaoAK " +kakaoRestApiKey);
+        headers.set(HttpHeaders.AUTHORIZATION, "KakaoAK " + kakaoRestApiKey);
         HttpEntity httpEntity = new HttpEntity<>(headers);
         // kakao api 호출
         return restTemplate.exchange(uri, HttpMethod.GET, httpEntity, kakaoApiResponseDto.class).getBody();
