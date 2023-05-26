@@ -5,7 +5,6 @@ import spock.lang.Specification
 
 import java.nio.charset.StandardCharsets
 
-@SpringBootTest // 스프링 통합 테스트
 class KakaoUrlBuilderServiceTest extends Specification {
 
 
