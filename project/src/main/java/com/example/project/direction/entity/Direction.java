@@ -24,8 +24,8 @@ public class Direction {
 
     // 고객 데이터
     private String inputAddress;
-    private String inputLatitude;
-    private String inputLongitude;
+    private double inputLatitude;
+    private double inputLongitude;
 
     // 약국 데이터
     private String targetPharmacyName;
