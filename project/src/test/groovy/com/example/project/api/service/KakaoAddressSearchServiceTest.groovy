@@ -2,8 +2,6 @@ package com.example.project.api.service
 
 import com.example.project.AbstractIntegrationContainerBaseTest
 import org.springframework.beans.factory.annotation.Autowired
-import spock.lang.Specification
-
 
 // AbstractIntegrationContainerBaseTest (테스트 컨테이너를 이용한 전체 통합 테스트 클래스)
 class KakaoAddressSearchServiceTest extends AbstractIntegrationContainerBaseTest {
@@ -16,7 +14,7 @@ class KakaoAddressSearchServiceTest extends AbstractIntegrationContainerBaseTest
         String address = null // 도 가능 !! def address = null
 
         when:
-        def result = kakaoAddressSearchService.requestAddressSerch(address)
+        def result = kakaoAddressSearchService.requestAddressSearch(address)
 
         then:
         result == null
@@ -28,7 +26,7 @@ class KakaoAddressSearchServiceTest extends AbstractIntegrationContainerBaseTest
         def address = "서울 성북구 종암로 10길"
 
         when:
-        def result = kakaoAddressSearchService.requestAddressSerch(address)
+        def result = kakaoAddressSearchService.requestAddressSearch(address)
 
         then:
         result.documentList.size() > 0

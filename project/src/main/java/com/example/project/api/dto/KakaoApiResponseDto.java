@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class kakaoApiResponseDto {
+public class KakaoApiResponseDto {
 
     @JsonProperty("meta")
     private MetaDto metaDto;

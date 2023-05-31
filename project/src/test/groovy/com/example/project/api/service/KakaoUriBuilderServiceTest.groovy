@@ -1,18 +1,18 @@
 package com.example.project.api.service
 
-import org.springframework.boot.test.context.SpringBootTest
+
 import spock.lang.Specification
 
 import java.nio.charset.StandardCharsets
 
-class KakaoUrlBuilderServiceTest extends Specification {
+class KakaoUriBuilderServiceTest extends Specification {
 
 
-    private KakaoUrlBuilderService kakaoUrlBuilderService;
+    private KakaoUriBuilderService kakaoUrlBuilderService;
 
     // def를 이용해서 테스트할 메소드를 만든다
     def setup() {   // 모든 feature메소드 전에 실행
-        kakaoUrlBuilderService = new KakaoUrlBuilderService();
+        kakaoUrlBuilderService = new KakaoUriBuilderService();
     }
 
     // 단위unit테스트

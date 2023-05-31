@@ -86,7 +86,6 @@ class DirectionServiceTest extends Specification {
         def results = directionService.buildDirectionList(documentDto)
 
         then:
-
         results.size() == 2
         results.get(0).targetPharmacyName == "호수온누리약국"
         results.get(1).targetPharmacyName == "돌곶이온누리약국"
