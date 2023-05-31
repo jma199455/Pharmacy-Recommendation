@@ -11,7 +11,7 @@ spring:
 spring:
   config:
     activate:
-      on-profile: common
+      on-profile: cmomon
 kakao:
   rest:
     api:
