@@ -13,6 +13,10 @@ public class KakaoUriBuilderService {
 
     private static final String KAKAO_LOCAL_SEARCH_ADDRESS_URL = "https://dapi.kakao.com/v2/local/search/address.json";
 
+    private static final String KAKAO_LOCAL_CATEGORY_SEARCH_URL = "https://dapi.kakao.com/v2/local/search/category.json";
+
+
+
     public URI buildUriByAddressSearch(String address) {
         // spirng제공 컴포넌트
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(KAKAO_LOCAL_SEARCH_ADDRESS_URL);
@@ -23,6 +27,26 @@ public class KakaoUriBuilderService {
 
         return uri;
     }
+
+    public URI buildUriByCategorySearch(double latitude, double longitude, double radius, String category) {
+
+        double meterRadius = radius * 1000; // 미터단위로 파라미터 요구해서 단위를 변경해줌
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(KAKAO_LOCAL_CATEGORY_SEARCH_URL);
+        uriBuilder.queryParam("category_group_code", category);
+        uriBuilder.queryParam("x", longitude);
+        uriBuilder.queryParam("y", latitude);
+        uriBuilder.queryParam("radius", meterRadius);
+        uriBuilder.queryParam("sort","distance");
+
+        URI uri = uriBuilder.build().encode().toUri();
+
+        log.info("[KakaoAddressSearchService buildUriByCategorySearch] uri: {} ", uri);
+
+        return uri;
+    }
+
+
 
 
 
