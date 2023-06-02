@@ -2,9 +2,9 @@
 Pharmacy-Recommendation
 
 # Tech Stack
-JDK 11
-Spring Boot 2.6.7
-Spring Data JPA
+[] JDK 11
+[] Spring Boot 2.6.7
+[] Spring Data JPA
 Gradle
 Handlebars
 Lombok
