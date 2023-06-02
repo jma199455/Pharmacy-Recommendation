@@ -5,10 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Getter
 public class PharmacyDto {
 
     private Long id;
@@ -16,5 +16,4 @@ public class PharmacyDto {
     private String pharmacyAddress;
     private double latitude;
     private double longitude;
-
 }

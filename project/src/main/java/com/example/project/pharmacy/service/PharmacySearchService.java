@@ -14,26 +14,27 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PharmacySearchService {
 
-    private PharmacyRepositoryService pharmacyRepositoryService;
+    private final PharmacyRepositoryService pharmacyRepositoryService;
+
 
     public List<PharmacyDto> searchPharmacyDtoList() {
 
-        // redis
 
+        // redis
         // db
         return pharmacyRepositoryService.findAll()
+
                 .stream()
-                .map(entity -> convertToPharmacyDto(entity))// 메서드 레퍼런스 시용해서 간결하게 사용 가능 (this::convertToPharmacyDto)
+                .map(this::convertToPharmacyDto)// 메서드 레퍼런스 시용해서 간결하게 사용 가능 (this::convertToPharmacyDto)
                 .collect(Collectors.toList());
     }
 
-
-    // 컨버팅
     private PharmacyDto convertToPharmacyDto(Pharmacy pharmacy) {
+
         return PharmacyDto.builder()
                 .id(pharmacy.getId())
-                .pharmacyAddress(pharmacy.getPharmacyAddress())
                 .pharmacyName(pharmacy.getPharmacyName())
+                .pharmacyAddress(pharmacy.getPharmacyAddress())
                 .latitude(pharmacy.getLatitude())
                 .longitude(pharmacy.getLongitude())
                 .build();

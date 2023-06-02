@@ -11,28 +11,32 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
-@Service
 @Slf4j
+@Service
+@RequiredArgsConstructor
 public class DirectionService {
 
     private static final int MAX_SEARCH_COUNT = 3; // 최대 검색 갯수
     private static final double RADIUS_KM = 10.0; // 반경 10 km
-
+    private static final String DIRECTION_BASE_URL = "https://map.kakao.com/link/map/";
 
     private final PharmacySearchService pharmacySearchService;
     private final DirectionRepository directionRepository;
-    private final KakaoCategorySearchService kakaoCategorySearchService;
 
+    private final KakaoCategorySearchService kakaoCategorySearchService;
 
     @Transactional
     public List<Direction> saveAll(List<Direction> directionList) {
-        if(CollectionUtils.isEmpty(directionList)) return Collections.emptyList();
+        if (CollectionUtils.isEmpty(directionList)) return Collections.emptyList();
         return directionRepository.saveAll(directionList);
     }
+
 
     public List<Direction> buildDirectionList(DocumentDto documentDto) {
         if(Objects.isNull(documentDto)) return Collections.emptyList();
@@ -57,28 +61,27 @@ public class DirectionService {
                 .collect(Collectors.toList());
     }
 
-    /// pharmacy search by category kakao api
+    // pharmacy search by category kakao api
     public List<Direction> buildDirectionListByCategoryApi(DocumentDto inputDocumentDto) {
         if(Objects.isNull(inputDocumentDto)) return Collections.emptyList();
 
         return kakaoCategorySearchService
-                .requestPharmacyCategorySearch(inputDocumentDto.getLatitude(), inputDocumentDto.getLongitude(), RADIUS_KM )
+                .requestPharmacyCategorySearch(inputDocumentDto.getLatitude(), inputDocumentDto.getLongitude(), RADIUS_KM)
                 .getDocumentList()
-                .stream().map(resultDocument ->
+                .stream().map(resultDocumentDto ->
                         Direction.builder()
                                 .inputAddress(inputDocumentDto.getAddressName())
                                 .inputLatitude(inputDocumentDto.getLatitude())
                                 .inputLongitude(inputDocumentDto.getLongitude())
-                                .targetPharmacyName(resultDocument.getPlaceName())
-                                .targetLatitude(resultDocument.getLatitude())
-                                .targetLongitude(resultDocument.getLongitude())
-                                .distance(resultDocument.getDistance() * 0.001) // km 단위
+                                .targetPharmacyName(resultDocumentDto.getPlaceName())
+                                .targetAddress(resultDocumentDto.getAddressName())
+                                .targetLatitude(resultDocumentDto.getLatitude())
+                                .targetLongitude(resultDocumentDto.getLongitude())
+                                .distance(resultDocumentDto.getDistance() * 0.001) // km 단위
                                 .build())
                 .limit(MAX_SEARCH_COUNT)
                 .collect(Collectors.toList());
     }
-
-
 
     // Haversine formula
     private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
@@ -90,5 +93,4 @@ public class DirectionService {
         double earthRadius = 6371; //Kilometers
         return earthRadius * Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));
     }
-
 }
