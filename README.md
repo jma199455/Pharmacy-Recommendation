@@ -1,5 +1,6 @@
 # Pharmacy-Recommendation
-Pharmacy-Recommendation
+약국 찾기 서비스
+외부 API(카카오 주소 검색 API)와 공공 데이터(약국 현황 정보)를 활용
 
 # Tech Stack
 * JDK 11
