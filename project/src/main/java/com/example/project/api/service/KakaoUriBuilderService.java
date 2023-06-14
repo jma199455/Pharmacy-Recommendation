@@ -18,7 +18,7 @@ public class KakaoUriBuilderService {
 
 
     public URI buildUriByAddressSearch(String address) {
-        // spirng제공 컴포넌트
+        // spirng제공 컴포넌트 UriComponentsBuilder
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(KAKAO_LOCAL_SEARCH_ADDRESS_URL);
         uriBuilder.queryParam("query", address);
 

@@ -24,7 +24,7 @@ public class KakaoAddressSearchService {
     private final RestTemplate restTemplate;
     private final KakaoUriBuilderService kakaoUrlBuilderService;
 
-    @Value("${KAKAO.REST.API.KEY}")
+    @Value("${kakao.rest.api.key}")
     private String kakaoRestApiKey;
 
     @Retryable(
@@ -42,6 +42,7 @@ public class KakaoAddressSearchService {
         URI uri = kakaoUrlBuilderService.buildUriByAddressSearch(address);
 
         HttpHeaders headers = new HttpHeaders();
+        System.out.println("kakaoRestApiKey =====> " + kakaoRestApiKey);
         headers.set(HttpHeaders.AUTHORIZATION, "KakaoAK " + kakaoRestApiKey);
         HttpEntity httpEntity = new HttpEntity<>(headers);
         // kakao api 호출

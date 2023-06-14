@@ -15,7 +15,7 @@ spring:
 kakao:
   rest:
     api:
-      key: ${KAKAO.REST.API.KEY} # 로컬 환경변수에 설정
+      key: ${KAKAO_REST_API_KEY} # 로컬 환경변수에 설정
 
 ---
 
@@ -36,6 +36,10 @@ spring:
       ddl-auto: validate # create
       show-sql: true
 
+pharmacy:
+  recommendation:
+    base:
+      url: http://localhost:8080/dir/
 ---
 
 spring:
