@@ -40,10 +40,28 @@ pharmacy:
   recommendation:
     base:
       url: http://localhost:8080/dir/
----
 
+---
 spring:
   config:
     activate:
       on-profile: prod
+  datasource: ## 데이터 베이스 설정
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://pharmacy-recommendation-localhost:3306/pharmacy-recommendation  # 데이터베이스 지정 (pharmacy-recommendation)
+    username: ${SPRING_DATASOURCE_USERNAME} # 로컬 환경변수에 설정
+    password: ${SPRING_DATASOURCE_PASSWORD} # 로컬 환경변수에 설정
+  redis: ## redis 설정
+    host: pharmacy-recommendation-redis
+    port: 6379
+  jpa: ## create 옵션은 운영에서는 사용 X 개발할 때만 사용
+    hibernate:
+      ddl-auto: validate  # prod 배포시 validate
+      show-sql: true
+
+pharmacy:
+  recommendation:
+    base:
+      url: http://localhost:8080/dir/ # aws ec2 ip 할당 받은 후 변경 예정
+
 
