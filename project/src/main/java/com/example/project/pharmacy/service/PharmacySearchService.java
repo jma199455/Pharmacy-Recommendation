@@ -25,6 +25,7 @@ public class PharmacySearchService {
         // redis 사용 empty 리스트가 아닐경우
         List<PharmacyDto> PharmacyDtoList = pharmacyRedisTemplateService.findAll();
         if(!PharmacyDtoList.isEmpty()) {
+            log.info("redis findAll success!");
             return PharmacyDtoList;
         }
 
