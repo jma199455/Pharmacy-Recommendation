@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -38,9 +39,17 @@ public class DirectionService {
         return directionRepository.saveAll(directionList);
     }
 
-    public Direction findById(String encodedId){
+    public String findDirectionUrlById(String encodedId){
         Long decodedId =  base62Service.decodeDirectionId(encodedId);
-        return directionRepository.findById(decodedId).orElse(null);
+        Direction direction =  directionRepository.findById(decodedId).orElse(null);
+
+        // 은혜약국,38.11,128.11
+        String params = String.join(",",direction.getTargetPharmacyName(),
+                String.valueOf(direction.getTargetLatitude()), String.valueOf(direction.getTargetLongitude()));
+
+        String result = UriComponentsBuilder.fromHttpUrl(DIRECTION_BASE_URL + params).toUriString();
+
+        return result;
     }
 
 

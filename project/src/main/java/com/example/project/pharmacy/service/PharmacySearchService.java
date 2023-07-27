@@ -1,5 +1,6 @@
 package com.example.project.pharmacy.service;
 
+import com.example.project.pharmacy.cache.PharmacyRedisTemplateService;
 import com.example.project.pharmacy.dto.PharmacyDto;
 import com.example.project.pharmacy.entity.Pharmacy;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +16,17 @@ import java.util.stream.Collectors;
 public class PharmacySearchService {
 
     private final PharmacyRepositoryService pharmacyRepositoryService;
+    private final PharmacyRedisTemplateService pharmacyRedisTemplateService;
 
-
-    public List<PharmacyDto> searchPharmacyDtoList() {
-
-
+    // 약국 데이터 조회
+    public List<PharmacyDto> searchPharmacyDtoList() { // 전체 약국 데이터를 조회, 메소드가 호출됬을 때 먼저 redis에서 조회하고 문제가 생기면 DB에서 조화
         // redis
+        List<PharmacyDto> pharmacyDtoList = pharmacyRedisTemplateService.findAll();
+        if(!pharmacyDtoList.isEmpty()) {
+            log.info("redis findAll success!!");
+            return pharmacyDtoList;
+        }
+
         // db
         return pharmacyRepositoryService.findAll()
 
